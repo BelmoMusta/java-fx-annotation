@@ -6,7 +6,7 @@ import musta.belmo.annotation.TextField;
 
 @Pane
 public class UserForm {
-    @TextField
+    @TextField(label = "USerName")
     private String userName;
     @TextField
     private String email;

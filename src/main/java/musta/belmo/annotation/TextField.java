@@ -21,5 +21,5 @@ public @interface TextField {
 
     String name() default "##";
 
-    String label() default "";
+    String label() default "##!!##";
 }

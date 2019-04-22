@@ -22,5 +22,5 @@ public @interface TextArea {
 
     String name() default "##";
 
-    String label() default "";
+    String label() default "##!!##";
 }
