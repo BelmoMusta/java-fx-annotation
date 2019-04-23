@@ -13,12 +13,10 @@ import java.lang.annotation.Target;
  * @version 0.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface ComboBox {
+@Target(ElementType.TYPE)
+public @interface PaneField {
 
-    int size() default 0;
+    String name() default "";
 
-    String name();
-
-    String label() default "";
+    Class<? extends javafx.scene.layout.Pane> layout() default javafx.scene.layout.Pane.class;
 }

@@ -14,9 +14,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface TextField {
-    String id() default "";
-
+public @interface InputTextField {
     String value() default "";
 
     String name() default "##";

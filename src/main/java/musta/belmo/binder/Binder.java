@@ -1,14 +1,13 @@
 package musta.belmo.binder;
 
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import musta.belmo.annotation.ComboBox;
-import musta.belmo.annotation.TextArea;
-import musta.belmo.annotation.TextField;
+import musta.belmo.annotation.ComboBoxField;
+import musta.belmo.annotation.PaneField;
+import musta.belmo.annotation.TextAreaField;
+import musta.belmo.annotation.InputTextField;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -25,51 +24,42 @@ public class Binder {
     /**
      * TODO: Complete the description of this method
      *
-     * @param element {@link T}
-     * @return Pane
+     * @param elementClass {@link T}
+     * @return PaneField
      * @throws Exception the raised exception if error.
      */
-    public <T> Pane bind(T element) throws Exception {
+    public <T> Pane createControls(Class<? extends T> elementClass) throws Exception {
         final GridPane pane;
-        Class<?> elementClass = element.getClass();
-        if (elementClass.isAnnotationPresent(musta.belmo.annotation.Pane.class)) {
+        if (elementClass.isAnnotationPresent(PaneField.class)) {
             pane = new GridPane();
             Field[] declaredFields = elementClass.getDeclaredFields();
             int row = 0;
             for (Field declaredField : declaredFields) {
                 declaredField.setAccessible(true);
-                Object value = declaredField.get(element);
+                String id = elementClass.getName() + "::" + declaredField.getName();
                 Control control = null;
                 Label label = null;
-                //  ObservableList<Node> children = pane.getChildren();
-                if (declaredField.isAnnotationPresent(TextField.class)) {
-                    TextField textFieldAnnotation = declaredField.getAnnotation(TextField.class);
-                    String id = textFieldAnnotation.id();
-                    javafx.scene.control.TextField textField = new javafx.scene.control.TextField();
-                    textField.setId(id);
-                    textField.setText(String.valueOf(value));
+
+                if (declaredField.isAnnotationPresent(InputTextField.class)) {
+                    InputTextField textFieldAnnotation = declaredField.getAnnotation(InputTextField.class);
+                    TextField textField = new TextField();
                     String labelName = textFieldAnnotation.label();
                     label = new Label(labelName);
                     control = textField;
 
 
-                } else if (declaredField.isAnnotationPresent(TextArea.class)) {
-                    TextArea textAreaAnnotation = declaredField.getAnnotation(TextArea.class);
-                    String id = textAreaAnnotation.id();
-                    javafx.scene.control.TextArea textArea = new javafx.scene.control.TextArea();
-                    textArea.setId(id);
-                    textArea.setText(String.valueOf(value));
-                    label = new Label(textAreaAnnotation.label());
+                } else if (declaredField.isAnnotationPresent(TextAreaField.class)) {
+                    TextAreaField textAreaFieldAnnotation = declaredField.getAnnotation(TextAreaField.class);
+                    TextArea textArea = new TextArea();
+                    label = new Label(textAreaFieldAnnotation.label());
                     control = textArea;
-                } else if (declaredField.isAnnotationPresent(ComboBox.class)) {
-                    ComboBox comboBoxAnnotation = declaredField.getAnnotation(ComboBox.class);
-                    String name = comboBoxAnnotation.name();
-                    javafx.scene.control.ComboBox comboBox = new javafx.scene.control.ComboBox();
-                    comboBox.setId(name);
-                    Collection collection = (Collection) value;
-                    comboBox.getItems().addAll(collection);
+                } else if (declaredField.isAnnotationPresent(ComboBoxField.class)) {
+                    ComboBoxField comboBoxFieldAnnotation = declaredField.getAnnotation(ComboBoxField.class);
+                    label = new Label(comboBoxFieldAnnotation.label());
+                    ComboBox comboBox = new ComboBox();
                     control = comboBox;
                 }
+
                 if (label != null) {
                     if ("##!!##".equals(label.getText())) {
                         label.setText(declaredField.getName());
@@ -77,13 +67,28 @@ public class Binder {
                     pane.add(label, 0, row);
                 }
                 if (control != null) {
+                    control.setId(id);
                     pane.add(control, 1, row);
                 }
-
                 row++;
             }
         } else
             throw new Exception("the object cannot be bound");
         return pane;
+    }
+
+    public <T> void bindElementToForm(T element, Pane pane) {
+        Field[] declaredFields = element.getClass().getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+
+        }
+        pane.getChildren();
+    }
+
+
+    private Node getById(Pane node, String id) {
+        return node.getChildren().stream()
+                .filter(child -> child.getId().equals(id))
+                .findFirst().orElse(null);
     }
 }

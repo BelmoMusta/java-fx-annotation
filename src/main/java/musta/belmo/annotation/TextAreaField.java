@@ -13,10 +13,12 @@ import java.lang.annotation.Target;
  * @version 0.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Pane {
+@Target(ElementType.FIELD)
+public @interface TextAreaField {
 
-    String name() default "";
+    String value() default "";
 
-    Class<? extends javafx.scene.layout.Pane> layout() default javafx.scene.layout.Pane.class;
+    String name() default "##";
+
+    String label() default "##!!##";
 }

@@ -22,7 +22,7 @@ public class FxApp extends Application {
         userForm.setEmail("@__");
         userForm.setUserName("userName");
         Binder binder = new Binder();
-        Pane pane = binder.bind(userForm);
+        Pane pane = binder.createControls(UserForm.class);
         Scene scene = new Scene(pane, 800, 800);
         primaryStage.setScene(scene);
         primaryStage.show();

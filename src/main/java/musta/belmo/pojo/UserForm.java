@@ -1,18 +1,18 @@
 package musta.belmo.pojo;
 
-import musta.belmo.annotation.Pane;
-import musta.belmo.annotation.TextArea;
-import musta.belmo.annotation.TextField;
+import musta.belmo.annotation.PaneField;
+import musta.belmo.annotation.TextAreaField;
+import musta.belmo.annotation.InputTextField;
 
-@Pane
+@PaneField
 public class UserForm {
-    @TextField(label = "USerName")
+    @InputTextField(label = "USerName")
     private String userName;
-    @TextField
+    @InputTextField
     private String email;
-    @TextField
+    @InputTextField
     private int age;
-    @TextArea
+    @TextAreaField
     private String description;
 
     public String getUserName() {
