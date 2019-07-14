@@ -18,7 +18,7 @@ public @interface TextAreaField {
 
     String value() default "";
 
-    String name() default "##";
+    String name() default AnnotationConstantes.DEFAULT_NAME;
 
-    String label() default "##!!##";
+    String label() default AnnotationConstantes.DEFAULT_LABEL;
 }

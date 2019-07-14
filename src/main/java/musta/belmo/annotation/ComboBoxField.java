@@ -21,6 +21,6 @@ public @interface ComboBoxField {
 
     String name();
 
-    String label() default "";
+    String label() default AnnotationConstantes.DEFAULT_LABEL;
 
 }

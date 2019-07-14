@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
+/**'
  * TODO: Complete the description of this class
  *
  * @author default author
@@ -15,9 +15,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface InputTextField {
+
+    String DEFAULT_LABEL = "##!!##";
+    String DEFAULT_NAME = "##";
+
     String value() default "";
 
-    String name() default "##";
+    String name() default AnnotationConstantes.DEFAULT_NAME;
 
-    String label() default "##!!##";
+    String label() default AnnotationConstantes.DEFAULT_LABEL;
 }
