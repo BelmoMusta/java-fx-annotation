@@ -23,6 +23,7 @@ public class FxApp extends Application {
         userForm.setUserName("userName");
         Binder binder = new Binder();
         Pane pane = binder.createControls(UserForm.class);
+        binder.mount(userForm, pane);
         Scene scene = new Scene(pane, 800, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
